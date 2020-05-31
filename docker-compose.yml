@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+    db:
+        image: postgres
+        container_name: qna_postgres
+        restart: always
+        environment: 
+            POSTGRES_PASSWORD: "123456789"
+            POSTGRES_USER: postgres
+        volumes: 
+            - ./pgdata:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+    qna_server:
+        image: susyqinqinyang/qna_server
+        depends_on:
+            - db
+        ports:
+            "3555:3555"
+
+volumes:
+    data:
+        external:
+            name: pgdata
+            
+
+

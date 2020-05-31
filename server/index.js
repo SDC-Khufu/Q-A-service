@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 3555;
 
 const { Pool } = require('pg');
 const pool = new Pool({
-    host: 'qnapostgres',
+    host: 'qna_postgres',
     user: 'postgres',
     password: '123456789',
     database: 'postgres',
