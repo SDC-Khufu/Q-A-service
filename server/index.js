@@ -16,7 +16,7 @@ const pool = new Pool({
 });
 
 
-app.get("/", (req, res) => {
+app.get("/test", (req, res) => {
     let queryStr = 'select * from questions_transformed where id = 1';
     pool
         .connect()
@@ -35,8 +35,8 @@ app.get("/", (req, res) => {
         })
 });
 
-pool.end().then(() => console.log('pg pool has ended'))
+// pool.end().then(() => console.log('pg pool has ended'))
 
-app.listen(port, () => {
-  console.log(`Server is listening on port: ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is listening on port: ${PORT}`);
 });
