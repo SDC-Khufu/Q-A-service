@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . ./
 
-# RUN makefile /app 
+# RUN make /app 
 # //this line supose to make a container for us and any change in app would be automatically updated
 
 EXPOSE 3555
