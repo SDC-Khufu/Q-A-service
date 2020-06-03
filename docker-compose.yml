@@ -3,7 +3,7 @@ services:
     db:
         image: postgres
         container_name: qna_postgres
-        restart: always
+        # restart: always
         environment: 
             POSTGRES_PASSWORD: "123456789"
             POSTGRES_USER: postgres
