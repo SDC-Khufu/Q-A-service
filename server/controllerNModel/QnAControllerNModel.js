@@ -53,15 +53,16 @@ const transform = (dbRes, product_id) => {
 const getQuestionsByProductId = async (req, res) => {
   console.log("req params for Q", req.params);
   const product_id = req.params.product_id;
-  let queryStr = `select distinct q.*,an.*, ap.photo_id, ap.url
-  from questions_transformed q   
-  inner join answers_transformed an on q.question_id = an.question_id and q.product_id = ${product_id}
-  left join answers_photos_final ap on ap.answer_id = an.answer_id where an.reported = 0 and q.reported = 0;`;
+  let queryStr = `select distinct q.*, an.answer_id, an.body, an.date, an.answerer_name, an.helpfulness, ap.photo_id, ap.url
+  from questions_transformed q
+  left join answers_transformed an on q.question_id = an.question_id and an.reported = 0
+  left join answers_photos_final ap on ap.answer_id = an.answer_id where q.product_id = ${product_id} and q.reported = 0;`;
+
   const client = await pool.connect();
   try {
     const dbRes = await client.query(queryStr);
-    let transformRes = transform(dbRes, product_id);
-    res.status(200).json(transformRes);
+    let transformedRes = transform(dbRes, product_id);
+    res.status(200).json(transformedRes);
   } catch (err) {
     console.log("Get server err for getting questions: ", err);
     res.status(400).json(`Couldn't get questions for this product`);
@@ -70,6 +71,7 @@ const getQuestionsByProductId = async (req, res) => {
   }
 };
 
+//ignore this one for now
 const getAnswersByQuestionId = async (req, res) => {
   //   console.log("req params for A", req.params);
   //   const question_id = req.params.question_id;
@@ -84,6 +86,25 @@ const getAnswersByQuestionId = async (req, res) => {
   //   } finally {
   //     await client.release();
   //   }
+};
+
+const addQuestionToAProductId = async (req, res) => {
+  console.log('pramas', req.params, 'body', req.body);
+  let product_id = req.params.product_id;
+  let queryStr = `insert into questions_transformed (product_id, question_body, question_date, asker_name, asker_email) 
+                  values ($1, $2, $3, $4, $5);`
+  let postDate = new Date();
+  let values = [product_id, req.body.body, postDate, req.body.name, req.body.email];
+  const client = await pool.connect();
+  try {
+    const dbRes = await client.query(queryStr, values);
+    res.status(201).json(dbRes);
+  } catch (err) {
+    console.log("Get server err for posting questions: ", err);
+    res.status(500).json(`Couldn't post question for this product`);
+  } finally {
+    await client.release();
+  }
 };
 
 // const getAnswersByQuestionId = (question_id) => {
@@ -111,7 +132,7 @@ const getAnswersByQuestionId = async (req, res) => {
 module.exports = {
   getQuestionsByProductId,
   getAnswersByQuestionId,
-  // addQuestionToAProductId,
+  addQuestionToAProductId,
   // addAnswerToAQuestionId,
   // markHelpfulByQuestionId,
   // markHelpfulByAnswerId,
