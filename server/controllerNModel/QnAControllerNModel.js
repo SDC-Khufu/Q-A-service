@@ -56,7 +56,7 @@ const transform = (dbRes, product_id) => {
 }
 
 const getQuestionsByProductId = async (req, res) => {
-  console.log("req params for Q", req.params);
+  // console.log("req params for Q", req.params);
   const product_id = req.params.product_id;
   let queryStr = `select distinct q.*, an.answer_id, an.body, an.date, an.answerer_name, an.helpfulness, ap.photo_id, ap.url
   from questions_transformed q
@@ -95,7 +95,7 @@ const getAnswersByQuestionId = async (req, res) => {
 };
 
 const addQuestionToAProductId = async (req, res) => {
-  console.log('pramas', req.params, 'body', req.body);
+  // console.log('pramas', req.params, 'body', req.body);
   let product_id = Number(req.params.product_id);
   let queryStr = `insert into questions_transformed (product_id, question_body, question_date, asker_name, asker_email) 
                   values ($1, $2, $3, $4, $5);`
@@ -114,7 +114,7 @@ const addQuestionToAProductId = async (req, res) => {
 };
 
 const addAnswerToAQuestionId = async (req, res) => {
-  console.log("req params for Add Answer", req.params, 'body for add answer', req.body);
+  // console.log("req params for Add Answer", req.params, 'body for add answer', req.body);
   let question_id = Number(req.params.question_id);
   let answerQueryStr = `insert into answers_transformed (question_id, body, date, answerer_name, answerer_email) 
                   values ($1, $2, $3, $4, $5) returning answer_id;`

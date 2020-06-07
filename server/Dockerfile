@@ -2,6 +2,8 @@ FROM node:10
 
 WORKDIR /user/src/app
 
+# ENV PASSWORD=123456789 
+
 COPY package*.json ./
 
 RUN npm install
