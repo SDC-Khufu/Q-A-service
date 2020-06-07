@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require('body-parser')
 const QnARoutes = require('./router/QnARoutes.js')
 const app = express();
-const PORT = process.env.PORT || 3555;
+const PORT = 3555;
 
 //middleware
 app.use(bodyParser.json());
