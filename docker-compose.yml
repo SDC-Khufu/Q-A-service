@@ -12,6 +12,7 @@ services:
             - ./pgdata/:/var/lib/postgresql/data
         ports:
             - "5432:5432"
+            
     qna_server:
         # image: susyqinqinyang/qna_server
         build: ./server/
