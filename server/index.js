@@ -11,8 +11,8 @@ app.use(bodyParser.json());
 app.use('/', QnARoutes);
 
 //loader test
-app.get("/loaderio-73a51971681a4f73454e66e4358d3ddb", (req, res) => {
-  res.send("loaderio-73a51971681a4f73454e66e4358d3ddb");
+app.get("/loaderio-d1272d07066127856e11179f874f42a3", (req, res) => {
+  res.send("loaderio-d1272d07066127856e11179f874f42a3");
 });
 
 // pool.end(() => console.log("pg pool has ended"));

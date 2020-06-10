@@ -2,7 +2,7 @@ FROM node:10
 
 WORKDIR /user/src/app
 
-ENV PASSWORD=123456789 
+ENV PASSWORD=123456789 HOST="18.224.31.243"
 
 COPY package*.json ./
 
