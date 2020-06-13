@@ -1,3 +1,4 @@
 node_modules
 pgdata
 nginxConf.js
+Dockerfile
